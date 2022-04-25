@@ -138,14 +138,12 @@ async def stream(ctx, *, message):
 @client.command()
 async def help(ctx):
     await ctx.send(f"```ini\n[ epic help menu ]\n\n>prefix ? [changes prefix to whatever u want]\n>ping [checks your ping, duh]\n>dl [sends download link to the selfbot]\n>purge 99 [purges specified amount of messages]\n>d [attempts to delete all messages in the channel command is sent in, fair warning you WILL get ratelimited]\n>av @user [gets users profile pic]\n>banner @user [gets users banner if they have one]\n>stream text [streams the text provided as your status]\\n\n\n[made by pokemon#0001]```", delete_after=8)
-
-
-@client.command()
-async def purge(ctx):
-    await ctx.message.delete()
-    await ctx.send(f"```ini\n[ i am cat i go meow ]\n\nPurge:
-    >purge [amount] [deletes specified amount of messages]\n\n\n[made by pokemon#0001]```", delete_after=8)
     
 
 
 client.run(config["token"], bot=False, reconnect=True)
+
+
+
+
+
