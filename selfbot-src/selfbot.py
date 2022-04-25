@@ -1,9 +1,10 @@
-import discord, json, os, time, httpx
+import discord, json, os, time, httpx, time, clock
 import asyncio
 from discord.ext import commands
 from colorama import Fore
 from pypresence import Presence
 from datetime import datetime
+
 
 
 #Client & Configuration
@@ -29,7 +30,7 @@ async def on_ready():
     os.system('cls' if os.name == 'nt' else 'clear')
     print(f'''{Fore.LIGHTBLUE_EX}
 
-                                                    virtue da best
+                                                     meow
 
                                             Connected as: {client.user}
 
@@ -83,10 +84,23 @@ async def purge(ctx, amount: int):
             try:
                 await message.delete()
                 deleted += 1
-            except discord.errors.Forbidden:
+            except (discord.errors.Forbidden, discord.errors.HTTPException):
                 ratelimited += 1
+                
 
     await ctx.send(f"```ini\n[ i am cat i go meow ]\n\nDeleted {deleted} messages\nRateLimited {ratelimited} times.```", delete_after=4)
+
+
+
+@client.command()
+async def ping(ctx):
+    await ctx.message.delete()
+    await ctx.send(f"```ini\n[ i am cat i go meow ]\n\nPing: {round(client.latency * 1000)}ms```", delete_after=4)
+
+@client.command()
+async def dl(ctx):
+    await ctx.message.delete()
+    await ctx.send(f"```ini\n[ i am cat i go meow ]\n\nDownload: https://github.com/wackiest/discord-selfbot```", delete_after=6)
 
 @client.command()
 async def av(ctx, *, user: discord.User = None):
@@ -98,7 +112,7 @@ async def av(ctx, *, user: discord.User = None):
     
     
 @client.command()
-async def banner(ctx, user:discord.Member):
+async def banner(ctx, user:discord.User):
     await ctx.message.delete()
     if user == None:
         user = ctx.author
@@ -115,7 +129,7 @@ async def stream(ctx, *, message):
     await ctx.message.delete()
     stream = discord.Streaming(
         name=message,
-        url="https://twitch.tv/virtueontop", 
+        url="https://twitch.tv/emo", 
     )
     await client.change_presence(activity=stream)
     await ctx.send(f"```ini\n[ i am cat i go meow ]\n\nStream set to: {message}```", delete_after=4)
@@ -123,13 +137,15 @@ async def stream(ctx, *, message):
 
 @client.command()
 async def help(ctx):
-    await ctx.send(f"```ini\n[ epic help menu ]\n\n>prefix ? [changes prefix to whatever u want]\n>purge 99 [purges specified amount of messages]\n>d [attempts to delete all messages in the channel command is sent in, fair warning you WILL get ratelimited]\n>av @user [gets users profile pic]\n>banner @user [gets users banner if they have one]\n>stream text [streams the text provided as your status]\n\n\n[made by virtue#0002]```", delete_after=8)
+    await ctx.send(f"```ini\n[ epic help menu ]\n\n>prefix ? [changes prefix to whatever u want]\n>ping [checks your ping, duh]\n>dl [sends download link to the selfbot]\n>purge 99 [purges specified amount of messages]\n>d [attempts to delete all messages in the channel command is sent in, fair warning you WILL get ratelimited]\n>av @user [gets users profile pic]\n>banner @user [gets users banner if they have one]\n>stream text [streams the text provided as your status]\\n\n\n[made by pokemon#0001]```", delete_after=8)
 
+
+@client.command()
+async def purge(ctx):
+    await ctx.message.delete()
+    await ctx.send(f"```ini\n[ i am cat i go meow ]\n\nPurge:
+    >purge [amount] [deletes specified amount of messages]\n\n\n[made by pokemon#0001]```", delete_after=8)
+    
 
 
 client.run(config["token"], bot=False, reconnect=True)
-
-
-
-
-
